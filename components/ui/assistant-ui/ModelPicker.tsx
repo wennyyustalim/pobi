@@ -1,5 +1,6 @@
 "use client";
 import { } from "@radix-ui/react-select";
+import { useState } from "react";
 import Image from "next/image";
 import type { FC } from "react";
 import cnn from "/public/assets/providers/cnn.svg";
@@ -37,7 +38,7 @@ const models = [
         icon: wsj,
     },
 ];
-export const ModelPicker: FC = () => {
+export const ModelPicker: FC = () => {  
     return (
         <Select defaultValue={models[0]?.value ?? ""}>
             <SelectTrigger className="max-w-[300px]">

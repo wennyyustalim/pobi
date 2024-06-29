@@ -38,6 +38,7 @@ const ThreadEmpty: FC = () => {
         <AvatarFallback>C</AvatarFallback>
       </Avatar>
       <p className="mt-4 text-xl">How can I help you today?</p>
+      <p>You're only seeing results from {}</p>
     </div>
   );
 };
