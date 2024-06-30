@@ -68,7 +68,9 @@ export function PromptForm({
 
         // Submit and get response message
         console.log('value: ' + value)
-        const responseMessage = await submitUserMessage2(value, /* pobi_value */ pobiValue, /* source_url */ sourceUrl)
+        console.log('pobiValue: ' + pobiValue)
+        console.log('sourceUrl: ' + sourceUrl)
+        const responseMessage = await submitUserMessage2(value, pobiValue, sourceUrl)
         setMessages(currentMessages => [...currentMessages, responseMessage])
       }}
     >

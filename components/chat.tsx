@@ -17,11 +17,11 @@ import Image from 'next/image'
 
 // TODO Change to URL
 const newsSources = [
-  { key: "BBC", icon: "/bbc.svg", url: "bbc.co.uk", alt: "BBC Icon" },
-  { key: "CNN", icon: "/cnn.svg", url: "cnn.com", alt: "CNN Icon" },
-  { key: "Time", icon: "/time.svg", url: "time.com", alt: "Time Icon" },
-  { key: "NPR", icon: "/npr.svg", url: "npr.com", alt: "NPR Icon" },
-  { key: "Fox", icon: "/fox.svg", url: "foxnews.com", alt: "Fox Icon" },
+  { key: "BBC", icon: "/bbc.svg", url: "https://www.bbc.com/", alt: "BBC Icon" },
+  { key: "CNN", icon: "/cnn.svg", url: "https://www.cnn.com/", alt: "CNN Icon" },
+  { key: "Time", icon: "/time.svg", url: "https://time.com/", alt: "Time Icon" },
+  { key: "NPR", icon: "/npr.svg", url: "https://www.npr.org/", alt: "NPR Icon" },
+  { key: "Fox", icon: "/fox.svg", url: "https://www.foxnews.com/", alt: "Fox Icon" },
 ];
 
 export interface ChatProps extends React.ComponentProps<'div'> {
@@ -80,12 +80,13 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
     [selectedValue]
   );
 
-  // const [sliderValue, setSliderValue] = useState(initialValue);
+  const initialValue = 0
+  const [sliderValue, setSliderValue] = useState(initialValue);
 
-  // const handleChange = (newValue) => {
-  //   setSliderValue(newValue);
-  // };
-
+  const handleChange = (newValue: number) => {
+    console.log('slidervalue: ' + newValue)
+    setSliderValue(newValue);
+  };
 
   return (
     <div className="flex w-full h-screen">
@@ -126,7 +127,6 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
           </DropdownMenu>
         </Dropdown>
         <div className="flex gap-6 w-full max-w-md pt-8">
-          {/* 10 is liberal */}
           <Slider
             label="personal bias"
             size="sm"
@@ -138,6 +138,8 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
             aria-label="personal bias"
             defaultValue={5}
             className="max-w-md"
+            value={sliderValue}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -160,7 +162,7 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
           id={id}
           input={input}
           setInput={setInput}
-          pobiValue={2}
+          pobiValue={sliderValue}
           sourceUrl={selectedSource.url}
           isAtBottom={isAtBottom}
           scrollToBottom={scrollToBottom}
