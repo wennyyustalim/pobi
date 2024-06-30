@@ -13,6 +13,14 @@ import { useScrollAnchor } from '@/lib/hooks/use-scroll-anchor'
 import { toast } from 'sonner'
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 import { Slider } from "@nextui-org/react";
+import Image from 'next/image'
+
+const newsSources = [
+  { key: "BBC", icon: "/time.svg", alt: "BBC Icon" },
+  { key: "CNN", icon: "/cnn.svg", alt: "CNN Icon" },
+  { key: "Time", icon: "/time.svg", alt: "Timeb Icon" },
+  { key: "Wall Street Journal", icon: "/wsj.svg", alt: "WSJ Icon" }
+];
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -58,11 +66,16 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
   const { messagesRef, scrollRef, visibilityRef, isAtBottom, scrollToBottom } =
     useScrollAnchor()
 
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["BBC"]));
+  const [selectedKeys, setSelectedKeys] = useState(new Set([newsSources[0].key]));
 
   const selectedValue = useMemo(
-    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
+    () => Array.from(selectedKeys).join(", "),
     [selectedKeys]
+  );
+
+  const selectedSource = useMemo(() => 
+    newsSources.find(source => source.key === selectedValue) || newsSources[0],
+    [selectedValue]
   );
 
   return (
@@ -74,27 +87,39 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
         <Dropdown>
           <DropdownTrigger>
             <Button
-              variant="light"
-              className="capitalize"
+              variant="flat"
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded"
             >
+              <Image 
+                src={selectedSource.icon} 
+                width={20} 
+                height={20} 
+                alt={selectedSource.alt}
+                className="mr-2"
+              />
               {selectedValue}
             </Button>
           </DropdownTrigger>
           <DropdownMenu
-            aria-label="Single selection example"
+            aria-label="News Source Selection"
             variant="flat"
             disallowEmptySelection
             selectionMode="single"
             selectedKeys={selectedKeys}
             onSelectionChange={setSelectedKeys}
+            className="bg-white shadow-lg rounded-md text-black"
           >
-            <DropdownItem key="bbc">BBC</DropdownItem>
-            <DropdownItem key="cnn">CNN</DropdownItem>
-            <DropdownItem key="time">Time</DropdownItem>
-            <DropdownItem key="wsj">WSJ</DropdownItem>
+            {newsSources.map((source) => (
+              <DropdownItem 
+                key={source.key} 
+                startContent={<Image src={source.icon} width={20} height={20} alt={source.alt} />}
+              >
+                {source.key}
+              </DropdownItem>
+            ))}
           </DropdownMenu>
         </Dropdown>
-        <div className="flex gap-6 w-full max-w-md p-8">
+        <div className="flex gap-6 w-full max-w-md pt-8">
           <Slider
             label="personal bias"
             size="sm"
