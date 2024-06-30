@@ -106,10 +106,8 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
   }
 }
 
-async function submitUserMessage2(content: string) {
+async function submitUserMessage2(value: string, pobiValue: number, sourceUrl: string) {
   'use server'
-
-  console.log("content: " + content)
 
   return {
     id: nanoid(),
