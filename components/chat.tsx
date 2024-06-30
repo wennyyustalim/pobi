@@ -17,11 +17,11 @@ import Image from 'next/image'
 
 // TODO Change to URL
 const newsSources = [
-  { key: "BBC", icon: "/bbc.svg", alt: "BBC Icon" },
-  { key: "CNN", icon: "/cnn.svg", alt: "CNN Icon" },
-  { key: "Time", icon: "/time.svg", alt: "Time Icon" },
-  { key: "NPR", icon: "/npr.svg", alt: "NPR Icon" },
-  { key: "Fox", icon: "/fox.svg", alt: "Fox Icon" },
+  { key: "BBC", icon: "/bbc.svg", url: "bbc.co.uk", alt: "BBC Icon" },
+  { key: "CNN", icon: "/cnn.svg", url: "cnn.com", alt: "CNN Icon" },
+  { key: "Time", icon: "/time.svg", url: "time.com", alt: "Time Icon" },
+  { key: "NPR", icon: "/npr.svg", url: "npr.com", alt: "NPR Icon" },
+  { key: "Fox", icon: "/fox.svg", url: "foxnews.com", alt: "Fox Icon" },
 ];
 
 export interface ChatProps extends React.ComponentProps<'div'> {
@@ -80,9 +80,16 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
     [selectedValue]
   );
 
+  // const [sliderValue, setSliderValue] = useState(initialValue);
+
+  // const handleChange = (newValue) => {
+  //   setSliderValue(newValue);
+  // };
+
+
   return (
     <div className="flex w-full h-screen">
-      <div className="w-64 h-screen bg-gray-800 p-4 flex flex-col space-y-6">
+      <div className="w-80 h-screen bg-gray-800 p-4 flex flex-col space-y-6">
         <Dropdown>
           <DropdownTrigger>
             <Button
@@ -121,11 +128,13 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
         <div className="flex gap-6 w-full max-w-md pt-8">
           {/* 10 is liberal */}
           <Slider
-            label="personal bias (conservative <-> liberal)"
+            label="personal bias"
             size="sm"
             step={1}
             maxValue={10}
             minValue={1}
+            startContent="conservative"
+            endContent="liberal"
             aria-label="personal bias"
             defaultValue={5}
             className="max-w-md"
@@ -151,6 +160,8 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
           id={id}
           input={input}
           setInput={setInput}
+          pobiValue={2}
+          sourceUrl={selectedSource.url}
           isAtBottom={isAtBottom}
           scrollToBottom={scrollToBottom}
         />

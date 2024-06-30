@@ -19,17 +19,22 @@ import { nanoid } from 'nanoid'
 import { useRouter } from 'next/navigation'
 
 export function PromptForm({
+  pobiValue,
+  sourceUrl,
   input,
   setInput
 }: {
+  pobiValue: number
+  sourceUrl: string
   input: string
   setInput: (value: string) => void
 }) {
   const router = useRouter()
   const { formRef, onKeyDown } = useEnterSubmit()
   const inputRef = React.useRef<HTMLTextAreaElement>(null)
-  const { submitUserMessage } = useActions()
+  const { submitUserMessage2 } = useActions()
   const [_, setMessages] = useUIState<typeof AI>()
+  const source = 'bbc.co.uk'
 
   React.useEffect(() => {
     if (inputRef.current) {
@@ -62,7 +67,8 @@ export function PromptForm({
         ])
 
         // Submit and get response message
-        const responseMessage = await submitUserMessage(value)
+        console.log('value: ' + value)
+        const responseMessage = await submitUserMessage2(value, /* pobi_value */ pobiValue, /* source_url */ sourceUrl)
         setMessages(currentMessages => [...currentMessages, responseMessage])
       }}
     >
