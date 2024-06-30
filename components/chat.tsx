@@ -15,6 +15,7 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@
 import { Slider } from "@nextui-org/react";
 import Image from 'next/image'
 
+// TODO Change to URL
 const newsSources = [
   { key: "BBC", icon: "/bbc.svg", alt: "BBC Icon" },
   { key: "CNN", icon: "/cnn.svg", alt: "CNN Icon" },
@@ -118,14 +119,15 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
           </DropdownMenu>
         </Dropdown>
         <div className="flex gap-6 w-full max-w-md pt-8">
+          {/* 10 is liberal */}
           <Slider
-            label="personal bias"
+            label="personal bias (conservative <-> liberal)"
             size="sm"
-            step={0.01}
-            maxValue={1}
-            minValue={0}
-            aria-label="Temperature"
-            defaultValue={0.2}
+            step={1}
+            maxValue={10}
+            minValue={1}
+            aria-label="personal bias"
+            defaultValue={5}
             className="max-w-md"
           />
         </div>

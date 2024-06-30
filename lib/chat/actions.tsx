@@ -110,6 +110,8 @@ async function submitUserMessage(content: string) {
   'use server'
 
   const aiState = getMutableAIState<typeof AI>()
+  console.log("content: " + content)
+  console.log("aiState.get(): " + aiState.get())
 
   aiState.update({
     ...aiState.get(),
