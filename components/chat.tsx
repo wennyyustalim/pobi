@@ -16,10 +16,11 @@ import { Slider } from "@nextui-org/react";
 import Image from 'next/image'
 
 const newsSources = [
-  { key: "BBC", icon: "/time.svg", alt: "BBC Icon" },
+  { key: "BBC", icon: "/bbc.svg", alt: "BBC Icon" },
   { key: "CNN", icon: "/cnn.svg", alt: "CNN Icon" },
-  { key: "Time", icon: "/time.svg", alt: "Timeb Icon" },
-  { key: "Wall Street Journal", icon: "/wsj.svg", alt: "WSJ Icon" }
+  { key: "Time", icon: "/time.svg", alt: "Time Icon" },
+  { key: "NPR", icon: "/npr.svg", alt: "NPR Icon" },
+  { key: "Fox", icon: "/fox.svg", alt: "Fox Icon" },
 ];
 
 export interface ChatProps extends React.ComponentProps<'div'> {
@@ -80,8 +81,7 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
 
   return (
     <div className="flex w-full h-screen">
-      {/* <div className="flex"> */}
-      <div className="w-64 bg-gray-800 p-4 flex flex-col space-y-6">
+      <div className="w-64 h-screen bg-gray-800 p-4 flex flex-col space-y-6">
         <Dropdown>
           <DropdownTrigger>
             <Button
@@ -130,7 +130,10 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
           />
         </div>
       </div>
-      <div>
+      <div
+        className="flex-grow overflow-auto"
+        ref={scrollRef}
+      >
         <div
           className={cn('pb-[200px] pt-4 md:pt-10', className)}
           ref={messagesRef}
@@ -150,7 +153,6 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
           scrollToBottom={scrollToBottom}
         />
       </div>
-      {/* </div> */}
     </div>
   )
 }
