@@ -12,6 +12,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useScrollAnchor } from '@/lib/hooks/use-scroll-anchor'
 import { toast } from 'sonner'
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
+import { Slider } from "@nextui-org/react";
 
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -69,52 +70,62 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
       className="group w-full overflow-auto pl-0 peer-[[data-state=open]]:lg:pl-[250px] peer-[[data-state=open]]:xl:pl-[300px]"
       ref={scrollRef}
     >
-      <div className="flex flex-col">
-        <div className="p-8">
-          <Dropdown>
-            <DropdownTrigger>
-              <Button
-                variant="light"
-                className="capitalize"
-              >
-                {selectedValue}
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu
-              aria-label="Single selection example"
-              variant="flat"
-              disallowEmptySelection
-              selectionMode="single"
-              selectedKeys={selectedKeys}
-              onSelectionChange={setSelectedKeys}
+      <div className="p-8">
+        <Dropdown>
+          <DropdownTrigger>
+            <Button
+              variant="light"
+              className="capitalize"
             >
-              <DropdownItem key="bbc">BBC</DropdownItem>
-              <DropdownItem key="cnn">CNN</DropdownItem>
-              <DropdownItem key="time">Time</DropdownItem>
-              <DropdownItem key="wsj">WSJ</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
-        <div>
-          <div
-            className={cn('pb-[200px] pt-4 md:pt-10', className)}
-            ref={messagesRef}
+              {selectedValue}
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu
+            aria-label="Single selection example"
+            variant="flat"
+            disallowEmptySelection
+            selectionMode="single"
+            selectedKeys={selectedKeys}
+            onSelectionChange={setSelectedKeys}
           >
-            {messages.length ? (
-              <ChatList messages={messages} isShared={false} session={session} />
-            ) : (
-              <EmptyScreen />
-            )}
-            <div className="w-full h-px" ref={visibilityRef} />
-          </div>
-          <ChatPanel
-            id={id}
-            input={input}
-            setInput={setInput}
-            isAtBottom={isAtBottom}
-            scrollToBottom={scrollToBottom}
+            <DropdownItem key="bbc">BBC</DropdownItem>
+            <DropdownItem key="cnn">CNN</DropdownItem>
+            <DropdownItem key="time">Time</DropdownItem>
+            <DropdownItem key="wsj">WSJ</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+        <div className="flex gap-6 w-full max-w-md p-8">
+          <Slider
+            label="personal bias"
+            size="sm"
+            step={0.01}
+            maxValue={1}
+            minValue={0}
+            aria-label="Temperature"
+            defaultValue={0.2}
+            className="max-w-md"
           />
         </div>
+      </div>
+      <div>
+        <div
+          className={cn('pb-[200px] pt-4 md:pt-10', className)}
+          ref={messagesRef}
+        >
+          {messages.length ? (
+            <ChatList messages={messages} isShared={false} session={session} />
+          ) : (
+            <EmptyScreen />
+          )}
+          <div className="w-full h-px" ref={visibilityRef} />
+        </div>
+        <ChatPanel
+          id={id}
+          input={input}
+          setInput={setInput}
+          isAtBottom={isAtBottom}
+          scrollToBottom={scrollToBottom}
+        />
       </div>
     </div>
   )
