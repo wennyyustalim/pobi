@@ -73,7 +73,7 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
     [selectedKeys]
   );
 
-  const selectedSource = useMemo(() => 
+  const selectedSource = useMemo(() =>
     newsSources.find(source => source.key === selectedValue) || newsSources[0],
     [selectedValue]
   );
@@ -83,75 +83,77 @@ export function Chat({ id, className, session, missingKeys }: ChatProps) {
       className="group w-full overflow-auto pl-0 peer-[[data-state=open]]:lg:pl-[250px] peer-[[data-state=open]]:xl:pl-[300px]"
       ref={scrollRef}
     >
-      <div className="p-8">
-        <Dropdown>
-          <DropdownTrigger>
-            <Button
-              variant="flat"
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded"
-            >
-              <Image 
-                src={selectedSource.icon} 
-                width={20} 
-                height={20} 
-                alt={selectedSource.alt}
-                className="mr-2"
-              />
-              {selectedValue}
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu
-            aria-label="News Source Selection"
-            variant="flat"
-            disallowEmptySelection
-            selectionMode="single"
-            selectedKeys={selectedKeys}
-            onSelectionChange={setSelectedKeys}
-            className="bg-white shadow-lg rounded-md text-black"
-          >
-            {newsSources.map((source) => (
-              <DropdownItem 
-                key={source.key} 
-                startContent={<Image src={source.icon} width={20} height={20} alt={source.alt} />}
+      {/* <div className="flex"> */}
+        <div className="p-8">
+          <Dropdown>
+            <DropdownTrigger>
+              <Button
+                variant="flat"
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded"
               >
-                {source.key}
-              </DropdownItem>
-            ))}
-          </DropdownMenu>
-        </Dropdown>
-        <div className="flex gap-6 w-full max-w-md pt-8">
-          <Slider
-            label="personal bias"
-            size="sm"
-            step={0.01}
-            maxValue={1}
-            minValue={0}
-            aria-label="Temperature"
-            defaultValue={0.2}
-            className="max-w-md"
+                <Image
+                  src={selectedSource.icon}
+                  width={20}
+                  height={20}
+                  alt={selectedSource.alt}
+                  className="mr-2"
+                />
+                {selectedValue}
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label="News Source Selection"
+              variant="flat"
+              disallowEmptySelection
+              selectionMode="single"
+              selectedKeys={selectedKeys}
+              onSelectionChange={setSelectedKeys}
+              className="bg-white shadow-lg rounded-md text-black"
+            >
+              {newsSources.map((source) => (
+                <DropdownItem
+                  key={source.key}
+                  startContent={<Image src={source.icon} width={20} height={20} alt={source.alt} />}
+                >
+                  {source.key}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+          <div className="flex gap-6 w-full max-w-md pt-8">
+            <Slider
+              label="personal bias"
+              size="sm"
+              step={0.01}
+              maxValue={1}
+              minValue={0}
+              aria-label="Temperature"
+              defaultValue={0.2}
+              className="max-w-md"
+            />
+          </div>
+        </div>
+        <div>
+          <div
+            className={cn('pb-[200px] pt-4 md:pt-10', className)}
+            ref={messagesRef}
+          >
+            {messages.length ? (
+              <ChatList messages={messages} isShared={false} session={session} />
+            ) : (
+              <EmptyScreen />
+            )}
+            <div className="w-full h-px" ref={visibilityRef} />
+          </div>
+          <ChatPanel
+            id={id}
+            input={input}
+            setInput={setInput}
+            isAtBottom={isAtBottom}
+            scrollToBottom={scrollToBottom}
           />
         </div>
-      </div>
-      <div>
-        <div
-          className={cn('pb-[200px] pt-4 md:pt-10', className)}
-          ref={messagesRef}
-        >
-          {messages.length ? (
-            <ChatList messages={messages} isShared={false} session={session} />
-          ) : (
-            <EmptyScreen />
-          )}
-          <div className="w-full h-px" ref={visibilityRef} />
-        </div>
-        <ChatPanel
-          id={id}
-          input={input}
-          setInput={setInput}
-          isAtBottom={isAtBottom}
-          scrollToBottom={scrollToBottom}
-        />
-      </div>
+      {/* </div> */}
     </div>
   )
 }
