@@ -89,9 +89,8 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
         {
           id: nanoid(),
           role: 'system',
-          content: `[User has purchased ${amount} shares of ${symbol} at ${price}. Total cost = ${
-            amount * price
-          }]`
+          content: `[User has purchased ${amount} shares of ${symbol} at ${price}. Total cost = ${amount * price
+            }]`
         }
       ]
     })
@@ -109,9 +108,27 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
 async function submitUserMessage2(value: string, pobiValue: number, sourceUrl: string) {
   'use server'
 
+  // Uncomment this
+  // const response = await fetch("http://127.0.0.1:5000/send", {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify({ value, pobiValue, sourceUrl })
+  // });
+
+  // if (!response.ok) {
+  //   throw new Error('Failed to submit message');
+  // }
+
+  // const data = await response.json();
+
+  // return {
+  //   id: nanoid(),
+  //   display: `${data.value} (pobiValue: ${data.pobiValue}), from ${sourceUrl}: `
+  // }
+
   return {
     id: nanoid(),
-    display: "This is a fake message"
+    display: `fake response`
   }
 }
 
